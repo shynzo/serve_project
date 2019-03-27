@@ -1,29 +1,34 @@
 package teste1;
+
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+
+import teste.Encrypt;
 
 public class Client {
 	
-	static final byte[] key = "Çç256gjYZAA62K".getBytes(StandardCharsets.UTF_8);
-	static AdvancedEncryptionStandard advancedEncryptionStandard = new AdvancedEncryptionStandard(key);
-   
-	public static void main(String[] args) throws UnknownHostException
-												, IOException, Exception {
-    	byte[] mens;
-        Socket cliente = new Socket("127.0.0.1", 12345);
-        System.out.println("O cliente se conectou ao servidor!");
-        
-        Scanner teclado = new Scanner(System.in);
-        OutputStream socketOutputStream = cliente.getOutputStream();
-        while (teclado.hasNextLine()) {
-        	mens = AdvancedEncryptionStandard.encrypt(teclado.toString().getBytes(StandardCharsets.UTF_8));
-        	socketOutputStream.write(mens);
-        }
+	public static void main(String[] args) 
+									throws UnknownHostException, IOException, Exception{
+		DataOutputStream out;
+		Encrypt men = new Encrypt();
+		Scanner t = new Scanner(System.in);
+		Socket client = new Socket("127.0.0.1", 12345);
+		byte[] mens;
+		out = new DataOutputStream(client.getOutputStream());
+		String str;
+		while(client.isClosed()==false){
+			str = t.nextLine();
+			mens = men.encrypt(str, "y/B?E(H+KbPeShVm");
+			System.out.println(new String(mens));
+			out.writeUTF(new String(mens));
+			out.flush();
+			str = " ";
+		}
+	t.close();
+	client.close();
+	}
 
-        teclado.close();
-    }
 }
