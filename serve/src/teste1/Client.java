@@ -28,7 +28,7 @@ public class Client {
 			str = " ";
 		}
 	t.close();
-	
+	client.close();
 	}
 
 }

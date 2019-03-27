@@ -24,7 +24,7 @@ public class Server {
 				strd = decrypt.decrypt(str, "y/B?E(H+KbPeShVm");
 				System.out.println("Mensagem: " + strd);
 			}
-			
+			servidor.close();
          }
 	
      }
