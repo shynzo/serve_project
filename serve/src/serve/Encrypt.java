@@ -1,16 +1,18 @@
 package serve;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt {
 	
-	String IV = "AAAAAAAAAAAAAAAA";
-	
-	public byte[] encrypt(String menE, String keys) throws Exception {
-		Cipher encrypt = Cipher.getInstance("AES/EBC/PKCS5Padding", "SunJCE");
-		SecretKeySpec key = new SecretKeySpec(keys.getBytes("UTF-8"), "AES");
-		encrypt.init(Cipher.ENCRYPT_MODE, key, encrypt.getParameters());
-		return encrypt.doFinal(menE.getBytes());
-	}
+	public byte[] encrypt(String message, String key, String iv) throws Exception {
+        Cipher encrypt = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
+        SecretKeySpec secretKey = new SecretKeySpec(Base64.getDecoder().decode(key), "AES");
+        encrypt.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(Base64.getDecoder().decode(iv)));
+        return encrypt.doFinal(message.getBytes(StandardCharsets.UTF_8));
+    }
 }

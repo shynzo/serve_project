@@ -1,18 +1,19 @@
 package teste1;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Decrypt{
 
-	String IV = "AAAAAAAAAAAAAAAA";
-	
-	public String decrypt(String str, String keys) throws Exception{
-		Cipher decrypt = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
-		SecretKeySpec key = new SecretKeySpec(keys.getBytes("UTF-8"), "AES");
-		decrypt.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
-		return new String(decrypt.doFinal(str.getBytes()),"UTF-8");
-	}
+	public String decrypt(String encryptedMessage, String key, String iv) throws Exception{
+        Cipher decrypt = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
+        SecretKeySpec secretKey = new SecretKeySpec(Base64.getDecoder().decode(key), "AES");
+        decrypt.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(Base64.getDecoder().decode(iv)));
+        return new String(decrypt.doFinal(Base64.getDecoder().decode(encryptedMessage)), StandardCharsets.UTF_8);
+    }
 	
 }

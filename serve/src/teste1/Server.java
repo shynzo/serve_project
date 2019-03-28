@@ -1,9 +1,11 @@
  package teste1;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Server {
 
@@ -11,20 +13,48 @@ public class Server {
 			DataInputStream in;
 			ServerSocket servidor = new ServerSocket(12345);
 			System.out.println("Porta 12345 aberta!");
-			String str, strd;
+			String mens, aesB, ivB, mend;
+			boolean arq = false;
 			Decrypt decrypt = new Decrypt();
 			Socket cliente = servidor.accept();
 			System.out.println("Nova conexão com o cliente " +     
 			cliente.getInetAddress().getHostAddress());
-			boolean con = false;
 			in = new DataInputStream(cliente.getInputStream());
-			while(!con) {
-				str = in.readUTF();
-				System.out.println(str);
-				strd = decrypt.decrypt(str, "y/B?E(H+KbPeShVm");
-				System.out.println("Mensagem: " + strd);
-			}
-			servidor.close();
-         }
+			try {
+				while(!servidor.isClosed()) {
+				aesB = in.readUTF();
+				ivB = in.readUTF();
+				mens = in.readUTF();
+				mend = decrypt.decrypt(mens, aesB, ivB);
+					if(mend.equals("te amo")) {
+						System.out.println("eu sei que você me ama.");
+					} else if(mend.equals("fechar")) {
+						System.out.println("Conexão encerrada.");
+						servidor.close();
+					} else if(mend.contains("abrir")) {
+						arq = true;
+						while(arq) {
+							System.out.println("O que deseja abrir?");
+							listarquivos();
 	
+						}
+					} else {
+						System.out.println("Mensagem: " + mend);
+					}
+				}
+			} catch (SocketException e) {
+				System.out.println("Conexão perdida.");
+				servidor.close();
+			}
+         }
+	public static void listarquivos() {
+		File folder = new File("C:\\Users\\Usuário\\Desktop\\programas");
+		 
+        String[] files = folder.list();
+ 
+        for (String file : files)
+        {
+            System.out.println("\t>" + file);
+        }
+	}
      }
