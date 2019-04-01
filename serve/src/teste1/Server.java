@@ -10,22 +10,25 @@ import java.net.SocketException;
 public class Server {
 
 public static void listarquivos() {
-  File folder = new File("C:\\Users\\gusta\\Desktop\\programas");
+  File folder = new File("C:\\Users\\Usuário\\Desktop\\programas");
   String[] files = folder.list();
   for (String file : files){
-    System.out.println("\t>" + file);
+	  file = file.replace(".bat", "");
+    System.out.println("\t> " + file);
   }
 }
 
-public static void exec(String a) {
-	try {
-		String[] command = {"cmd.exe", "/C", "Start", "C:\\Users\\gusta\\Desktop\\programas\\".concat(a).concat(".bat")};
-		Process p =  Runtime.getRuntime().exec(command);
-	} catch (IOException e){
-		System.out.println("Erro! Programa não encontrado.");
-	}
+public static void executar(String a) {
+	  File folder = new File("C:\\Users\\Usuário\\Desktop\\programas");
+	  String[] files = folder.list();
+	  for (String file : files){
+		  file = file.replace(".bat", "");
+		  if(file.equalsIgnoreCase(a))
+			  Exec.Executar(file);
+		  else
+			  continue;
+	  }
 }
-
 public static void criardir() {
 	File diretorio = new File("C:\\Users\\Snake\\Desktop\\Macros");
     diretorio.mkdir();
@@ -40,8 +43,7 @@ public static void main(String[] args) throws IOException, Exception {
 	Socket cliente = servidor.accept();
 	System.out.println("Nova conexão com o cliente " +     
 	cliente.getInetAddress().getHostAddress());
-	DataInputStream in;
-	in = new DataInputStream(cliente.getInputStream());
+	DataInputStream in = new DataInputStream(cliente.getInputStream());
 	try {
 	while(!servidor.isClosed()) {
 		aesB = in.readUTF();
@@ -49,13 +51,6 @@ public static void main(String[] args) throws IOException, Exception {
 		mens = in.readUTF();
 		mend = decrypt.decrypt(mens, aesB, ivB);
 		switch(mend) {
-			case "te amo":
-				System.out.println("eu sei que você me ama.");
-				break;
-			case "fechar":
-				System.out.println("Conexão encerrada.");
-				servidor.close();	
-				break;
 			case "abrir":
 				arq = true;
 				while(arq) {
@@ -65,16 +60,36 @@ public static void main(String[] args) throws IOException, Exception {
 				ivB = in.readUTF();
 				mens = in.readUTF();
 				mend = decrypt.decrypt(mens, aesB, ivB);
-				if(mend.equals("firefox")) {
-					exec(mend);
-				    arq = false;
-				} else {
-					arq = false;
-					}
+				executar(mend);
+				mend = "";
+				arq = false;
 				}
 				break;
+			case "fechar":
+				System.out.println("Conexão encerrada.");
+				servidor.close();	
+				break;
+			case "configurar":
+				String nome, nomexe, camP;
+				System.out.println("Como quer chamar o seu programa?");
+				aesB = in.readUTF();
+				ivB = in.readUTF();
+				mens = in.readUTF();
+				nome = decrypt.decrypt(mens, aesB, ivB);
+				System.out.println("Qual o caminho do seu programa?");
+				aesB = in.readUTF();
+				ivB = in.readUTF();
+				mens = in.readUTF();
+				camP = decrypt.decrypt(mens, aesB, ivB);
+				System.out.println("Qual o nome do seu programa?");
+				aesB = in.readUTF();
+				ivB = in.readUTF();
+				mens = in.readUTF();
+				nomexe = decrypt.decrypt(mens, aesB, ivB);
+				CriarArquivo.criararq(nome, nomexe, camP);
+				break;
 			default:
-				System.out.println("Mensagem: " + mend);
+				Mensagens.mensagem(mend);
 				break;
 		}
 	}} catch (SocketException e) {
