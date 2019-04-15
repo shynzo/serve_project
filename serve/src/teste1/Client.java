@@ -21,8 +21,12 @@ public static void main(String[] args)
 	byte[] iv = new byte[16];
 	byte[] aesKey = new byte[16];
 	Scanner t = new Scanner(System.in);
+	System.out.print("Insira o IP da máquina:\n>");
+	String ip = t.nextLine();
+	System.out.print("Insira a porta da máquina:\n>");
+	int port = t.nextInt();
 	try {
-	Socket client = new Socket("127.0.0.1", 12345);
+	Socket client = new Socket(ip, port);
 	out = new DataOutputStream(client.getOutputStream());
 	String str;
 		try {
