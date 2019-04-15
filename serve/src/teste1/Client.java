@@ -23,10 +23,8 @@ public static void main(String[] args)
 	Scanner t = new Scanner(System.in);
 	System.out.print("Insira o IP da máquina:\n>");
 	String ip = t.nextLine();
-	System.out.print("Insira a porta da máquina:\n>");
-	int port = t.nextInt();
 	try {
-	Socket client = new Socket(ip, port);
+	Socket client = new Socket(ip, 51433);
 	out = new DataOutputStream(client.getOutputStream());
 	String str;
 		try {
