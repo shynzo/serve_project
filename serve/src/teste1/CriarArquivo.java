@@ -10,7 +10,7 @@ public class CriarArquivo {
 	public static String arq;
 	public static void criararq(String nome, String nomexe, String camP) {
 		try {
-			File file = new File("C:\\SERVE".concat(nome).concat(".bat"));
+			File file = new File("C:\\SERVE\\".concat(nome).concat(".bat"));
 			boolean fvar = file.createNewFile();
 			
 			if(fvar) {
