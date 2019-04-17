@@ -3,6 +3,7 @@ package teste1;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -38,8 +39,10 @@ public static void criardir() {
 public static void main(String[] args) 
 		throws IOException, Exception {
 	criardir();
-	ServerSocket servidor = new ServerSocket(12345);
-	System.out.println("Porta 12345 aberta!");
+	ServerSocket servidor = new ServerSocket(51433);
+	System.out.println("Socket iniciado!");
+	InetAddress localhost = InetAddress.getLocalHost();
+	System.out.println("O seu IP é: " + localhost.getHostAddress() + " !");
 	String mens, aesB, ivB, mend;
 	boolean arq = false;
 	Decrypt decrypt = new Decrypt();
