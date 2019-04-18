@@ -1,7 +1,7 @@
 package teste1;
 
 public class Mensagens {
-	
+
 	public static void mensagem(String mens){
 		switch(mens) {
 			case "te amo":
@@ -31,11 +31,11 @@ public class Mensagens {
 							break;
 					}
 				break;
-			
+
 			default:
 				System.out.println("Mensagem: " + mens);
 				break;
 	}
-	
+
 	}
 }
