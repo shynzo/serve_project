@@ -72,6 +72,32 @@ public static void main(String[] args)
 				}
 				break;
 			case "fechar":
+				while(true) {
+					System.out.println("O que deseja verificar?");
+					aesB = in.readUTF();
+					ivB = in.readUTF();
+					mens = in.readUTF();
+					mend = decrypt.decrypt(mens, aesB, ivB);
+					String file = mend;
+					arq = VerificaAberto.verf(mend);
+					if(arq){
+						System.out.println("Confirmar encerramento do programa ".concat(file.concat(".exe"))+"?(S/N)");
+						aesB = in.readUTF();
+						ivB = in.readUTF();
+						mens = in.readUTF();
+						mend = decrypt.decrypt(mens, aesB, ivB);
+			            if(mend.equalsIgnoreCase("s")){
+			            	Process taskill = Runtime.getRuntime().exec("TASKKILL /F /IM ".concat(file.concat("*")) + " /T");
+			            	System.out.println("Processo encerrado.");
+			            	break;
+			            }
+			            else
+			            	break;
+					}
+					arq = false;
+				}
+				break;
+			case "encerrar":
 				System.out.println("Conexão encerrada.");
 				servidor.close();	
 				break;
