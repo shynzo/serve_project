@@ -27,10 +27,11 @@ public class VerificaAberto {
 	        ioe.printStackTrace();
 	    }
 	    
-	    if(instances>0)
+	    if(instances>0) {
         	return true;
-        else
+	    } else {
         	return false;
+	    }
 	}
 }
 
