@@ -17,7 +17,6 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, Exception {
 		DataOutputStream out;
 		SecureRandom random = new SecureRandom();
-		Encrypt encrypt = new Encrypt();
 		byte[] iv = new byte[16];
 		byte[] aesKey = new byte[16];
 		Scanner t = new Scanner(System.in);
@@ -36,7 +35,7 @@ public class Client {
 						String ivAsString = Base64.getEncoder().encodeToString(iv);
 						System.out.print(">");
 						str = t.nextLine();
-						byte[] mens = encrypt.encrypt(str, aesKeyAsString, ivAsString);
+						byte[] mens = Encrypt.encrypt(str, aesKeyAsString, ivAsString);
 						String encryptedString = Base64.getEncoder().encodeToString(mens);
 						out.writeUTF(aesKeyAsString);
 						out.flush();

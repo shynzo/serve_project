@@ -9,7 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt {
 
-	public byte[] encrypt(String message, String key, String iv) throws Exception {
+	public static byte[] encrypt(String message, String key, String iv) throws Exception {
 		Cipher encrypt = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
 		SecretKeySpec secretKey = new SecretKeySpec(Base64.getDecoder().decode(key), "AES");
 		encrypt.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(Base64.getDecoder().decode(iv)));

@@ -16,11 +16,12 @@ public class Server {
 			System.out.println("Pasta criada no caminho: " + dir.getAbsolutePath());
 	}
 
+	
 	public static void main(String[] args) throws IOException, Exception {
 
 		criardir();
 		String menc, aesB, ivB, mend;
-		Decrypt decrypt = new Decrypt();
+		
 		ServerSocket servidor = new ServerSocket(51433);
 
 		System.out.println("Socket iniciado!");
@@ -35,7 +36,7 @@ public class Server {
 				aesB = in.readUTF();
 				ivB = in.readUTF();
 				menc = in.readUTF();
-				mend = decrypt.decrypt(menc, aesB, ivB);
+				mend = Decrypt.decrypt(menc, aesB, ivB);
 				switch (mend) {
 				case "configurar":
 					String[] config = { "", "", "" };
@@ -43,7 +44,7 @@ public class Server {
 					aesB = in.readUTF();
 					ivB = in.readUTF();
 					menc = in.readUTF();
-					config[0] = decrypt.decrypt(menc, aesB, ivB);
+					config[0] = Decrypt.decrypt(menc, aesB, ivB);
 					if ("cancelar".equalsIgnoreCase(config[0])) {
 						System.out.println("Operação encerrada!");
 						break;
@@ -52,7 +53,7 @@ public class Server {
 						aesB = in.readUTF();
 						ivB = in.readUTF();
 						menc = in.readUTF();
-						config[1] = decrypt.decrypt(menc, aesB, ivB);
+						config[1] = Decrypt.decrypt(menc, aesB, ivB);
 						if ("cancelar".equalsIgnoreCase(config[0])) {
 							System.out.println("Operação encerrada!");
 							break;
@@ -61,7 +62,7 @@ public class Server {
 							aesB = in.readUTF();
 							ivB = in.readUTF();
 							menc = in.readUTF();
-							config[2] = decrypt.decrypt(menc, aesB, ivB);
+							config[2] = Decrypt.decrypt(menc, aesB, ivB);
 							if ("cancelar".equalsIgnoreCase(config[2])) {
 								System.out.println("Operação encerrada!");
 								break;
