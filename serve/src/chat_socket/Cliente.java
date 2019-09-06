@@ -1,4 +1,4 @@
-package cola_prova;
+package chat_socket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

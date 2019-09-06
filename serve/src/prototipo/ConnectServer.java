@@ -1,4 +1,4 @@
-package serve;
+package prototipo;
 
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;

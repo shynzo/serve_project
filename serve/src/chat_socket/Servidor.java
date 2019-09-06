@@ -1,4 +1,4 @@
-package cola_prova;
+package chat_socket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,7 +26,9 @@ public class Servidor {
 				out.writeUTF(mensagem);
 				out.flush();
 			}
+			servidor.close();
 		}catch(SocketException e){
+			
 			e.printStackTrace();
 		}
 	}

@@ -1,4 +1,4 @@
-package teste1;
+package br.com.project_serve;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Scanner;
 
-import teste1.Encrypt;
+import br.com.project_serve.Encrypt;
 
 public class Client {
 
