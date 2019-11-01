@@ -22,20 +22,24 @@ public class CriarArquivo {
 
 	public static void criararq(String nome, String nomexe, String camP) {
 		try {
-			File file = new File("C:\\SERVE\\".concat(convert(nome)).concat(".bat"));
-			boolean fvar = file.createNewFile();
-			if (fvar) {
-				PrintWriter pw = new PrintWriter(file);
-				pw.print("@echo off" + System.getProperty("line.separator") + "cd ".concat(camP)
+			File dir = new File("C:\\SERVE");
+			if(dir.exists()){
+				File file = new File(dir, "convert(nome).concat(".bat")");
+				boolean fvar = file.createNewFile();
+				if (fvar) {
+					PrintWriter pw = new PrintWriter(file);
+					pw.print("@echo off" 
+						+ System.getProperty("line.separator") + "cd ".concat(camP)
 						+ System.getProperty("line.separator") + "start ".concat(nomexe)
 						+ System.getProperty("line.separator") + "exit");
-				pw.close();
-				System.out.println("Programa configurado!");
-			} else {
-				System.out.println("ERRO!\nPrograma j· existente.");
+					pw.close();
+					System.out.println("Programa configurado!");
+				} else {
+					System.out.println("ERRO!\nPrograma j√° existente.");
+				}
 			}
 		} catch (IOException e) {
-			System.out.println("Ocorreu uma exceÁ„o: ");
+			System.out.println("Ocorreu uma exce√ß√£o: ");
 			e.printStackTrace();
 		}
 	}
